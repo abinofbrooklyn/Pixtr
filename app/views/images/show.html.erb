@@ -1,0 +1,5 @@
+<h2><%= image_tag @image.url %></h2>
+
+<%=link_to "Edit", edit_gallery_image_path %>
+
+<%=link_to "Delete", gallery_image_path, method: :delete, data: {confirm: "Are you sure?"} %>
