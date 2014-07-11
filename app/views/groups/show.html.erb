@@ -1,0 +1,21 @@
+<h1><%= @group.name %></h1>
+
+<p><%= @group.description %></p>
+
+<nav>
+  <ul>
+    <% if current_user.member?(@group) %>
+      <li><%= link_to "Leave the group", leave_group_path(@group), method: :delete, data: {confirm: "Are you sure?"} %></li>
+    <% else %>
+      <li> <%= link_to "Join the group", join_group_path(@group), method: :post %></li>
+    <% end %>
+  </ul>
+</nav>
+
+<ul>
+  <% @group.users.each do |user| %>
+    <li><%= link_to user.email, user %></li>
+  <% end %>
+</ul>
+
+a

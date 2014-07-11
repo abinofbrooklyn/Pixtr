@@ -1,0 +1,15 @@
+
+<%= form_for(@user) do |form| %>
+  <%= render "errors", object: form.object %>
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <%= form.submit "Sign Up" %>
+<% end %>

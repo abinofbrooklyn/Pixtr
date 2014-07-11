@@ -3,6 +3,7 @@ class ImagesController < ApplicationController
   def show
     @gallery = find_gallery 
     @image = find_image_in(@gallery)
+    @comment = Comment.new
   end
 
   def new
@@ -22,23 +23,23 @@ class ImagesController < ApplicationController
   end
   
   def edit
-    @gallery = find_gallery
+    @gallery = Gallery.find(params[:gallery_id])
     @image = Image.find(params[:id])
   end
 
   def update
     @gallery = find_gallery
-    @image = find_image_in(gallery)
-    if image.update(image_params)
+    @image = find_image_in(@gallery)
+    if @image.update(image_params)
       redirect_to @gallery
     else
       render :edit
     end
   end
 
-  def destroy
-    image = Image.find(params[:id])
-    gallery = image.gallery
+  def destroy    
+    gallery = find_gallery
+    image = find_image_in(gallery)
     image.destroy
     redirect_to gallery
   end
@@ -55,6 +56,6 @@ class ImagesController < ApplicationController
 
   def image_params
     params.require(:image).
-      permit(:name, :description, :url)
+      permit(:name, :description, :url, group_ids: [])
   end
 end

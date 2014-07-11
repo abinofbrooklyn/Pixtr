@@ -1,0 +1,19 @@
+<nav>
+  <ul>
+    <li><%= link_to "Create gallery", new_gallery_path %></li>
+  </ul>
+  <ul>
+    <li><%= link_to "Join group", new_group_path %></li>
+  </ul>
+</nav>
+
+<section>
+  <h2>Galleries</h2>
+    <%= render(current_user.galleries) || "No galleries" %>
+</section>
+
+<section>
+  <h2>Groups</h2>
+    <%= render(current_user.groups) || "No groups" %>
+</section>
+

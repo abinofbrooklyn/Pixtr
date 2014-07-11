@@ -1,0 +1,15 @@
+<%= form_for(@group) do |form| %>
+  <%= render "errors", object: form.object %>
+ 
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <%= form.submit "Create" %>
+<% end %>

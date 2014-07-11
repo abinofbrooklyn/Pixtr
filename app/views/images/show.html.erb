@@ -1,5 +1,22 @@
-<h2><%= image_tag @image.url %></h2>
+<nav>
+  <%= link_to @gallery.name, @gallery %>
+  <%= link_to "Edit", edit_gallery_image_path %>
+  <%= link_to "Delete", gallery_image_path, method: :delete, data: {confirm: "Are you sure?"} %>
+</nav>
 
-<%=link_to "Edit", edit_gallery_image_path %>
+ <h3> <%= @image.name %> </h3>
+ 
+ <p> <%= @image.description %></p>
 
-<%=link_to "Delete", gallery_image_path, method: :delete, data: {confirm: "Are you sure?"} %>
+<h2><%= image_tag @image.url, width: 350%> </h2>
+
+<%= render @image.comments %>
+
+  <%= form_for([@gallery, @image, @comment]) do |form| %>
+    <%= form.text_area :content %>
+    <%= form.submit "Post" %>
+  <% end %>
+
+
+
+

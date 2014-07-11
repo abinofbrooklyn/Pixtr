@@ -4,9 +4,15 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def show
+    @user = current_user
+  end
+
   def create
-    @user = User.new(user_params)
-    if @user.save
+    @user = sign_up(user_params)
+  
+    if @user.valid?
+      sign_in(@user)
       redirect_to  galleries_path
     else
       render :new
@@ -17,7 +23,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).
-      permit(:email)
+      permit(:email, :password)
   end
 
 end

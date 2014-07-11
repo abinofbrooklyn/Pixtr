@@ -1,11 +1,25 @@
 Rails.application.routes.draw do
-  root to: "galleries#index"
+require "monban/constraints/signed_in"
+constraints Monban::Constraints::SignedIn.new do
+  root "dashboards#show" , as: :dashboard
+end
 
+  root to: "homes#show"
+  
+  resource :dashboard, only: [:show]
   resource :session, only: [:new, :create, :destroy]
  
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show] 
+  resources :groups, only: [:index, :new, :create, :show] do
+    member do
+      post "join" => "group_memberships#create"
+      delete "leave" => "group_memberships#destroy"
+    end
+  end
   resources :galleries do
-    resources :images, only: [:new, :create, :show, :edit, :update, :destroy]
+    resources :images, only: [:new, :create, :show, :edit, :update, :destroy] do
+    resources :comments, only: [:create]
+    end
   end
 end
   # The priority is based upon order of creation: first created -> highest priority.

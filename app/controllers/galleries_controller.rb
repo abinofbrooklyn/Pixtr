@@ -1,15 +1,18 @@
 class GalleriesController < ApplicationController
- 
+before_action :require_login
+
   def index
     @galleries = Gallery.all
   end
 
   def new
-    @gallery = Gallery.new # only to make "form for" work
+    @gallery = Gallery.new 
   end
 
   def create
-    @gallery = Gallery.new(gallery_params)
+    params_with_user_id = gallery_params.merge(
+      user_id: current_user.id)
+    @gallery = Gallery.new(params_with_user_id)
     if @gallery.save
       redirect_to galleries_path
     else
@@ -19,6 +22,7 @@ class GalleriesController < ApplicationController
 
   def show
     @gallery = Gallery.find(params[:id])
+    @images = @gallery.images
   end
 
   def edit
@@ -37,7 +41,7 @@ class GalleriesController < ApplicationController
   def destroy
     gallery = Gallery.find(params[:id])
     gallery.destroy
-    redirect_to "/galleries"
+    redirect_to galleries_path
   end
 
   private
